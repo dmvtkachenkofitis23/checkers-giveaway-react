@@ -1,4 +1,3 @@
-import React from 'react';
 import { Side } from '../../types/game';
 
 interface PieceProps {
@@ -6,7 +5,7 @@ interface PieceProps {
   isKing: boolean;
 }
 
-const Piece: React.FC<PieceProps> = ({ side, isKing }) => {
+const Piece = ({ side, isKing }: PieceProps) => {
   return (
     <div className={`piece ${side} ${isKing ? 'king' : ''}`}>
       {isKing && <span style={{ color: 'gold' }}>K</span>}

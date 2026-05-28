@@ -21,8 +21,8 @@ const initialState: GameState = {
   theme: 'classic',
   players: {
     white: 'Білі',
-    black: 'Чорні'
-  }
+    black: 'Чорні',
+  },
 };
 
 const gameSlice = createSlice({

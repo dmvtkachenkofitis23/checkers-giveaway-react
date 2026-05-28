@@ -1,4 +1,3 @@
-import React from 'react';
 import Piece from '../Piece/Piece';
 import { PieceType } from '../../types/game';
 
@@ -11,7 +10,7 @@ interface CellProps {
   onClick: (row: number, col: number) => void;
 }
 
-const Cell: React.FC<CellProps> = ({ row, col, piece, isHighlighted, isPossible, onClick }) => {
+const Cell = ({ row, col, piece, isHighlighted, isPossible, onClick }: CellProps) => {
   const isDark = (row + col) % 2 !== 0;
   return (
     <div 

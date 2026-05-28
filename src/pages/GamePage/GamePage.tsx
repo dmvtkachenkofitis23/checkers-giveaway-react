@@ -1,8 +1,7 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Board from '../../components/Board/Board';
 
-const GamePage: React.FC = () => {
+const GamePage = () => {
   const navigate = useNavigate();
 
   return (

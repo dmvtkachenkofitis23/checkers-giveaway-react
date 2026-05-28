@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cell from '../Cell/Cell';
 import { WHITE, BLACK } from '../../constants/gameConstants';
@@ -8,7 +8,7 @@ import { RootState } from '../../store';
 import { Coordinate, Move } from '../../types/game';
 import './Board.css';
 
-const Board: React.FC = () => {
+const Board = () => {
   const dispatch = useDispatch();
   const { board, turn, winner, theme, players } = useSelector((state: RootState) => state.game);
 

@@ -1,23 +1,31 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { setTheme, resetGame, setPlayers } from '../../store/gameSlice';
 import { RootState } from '../../store';
 import './StartMenu.css';
 
-interface FormInputs {
-  whitePlayer: string;
-  blackPlayer: string;
-  gameTheme: string;
-}
+const validationSchema = yup.object({
+  whitePlayer: yup.string()
+    .required("Ім'я гравця за Білих є обов'язковим")
+    .min(2, "Ім'я повинно містити мінімум 2 символи"),
+  blackPlayer: yup.string()
+    .required("Ім'я гравця за Чорних є обов'язковим")
+    .min(2, "Ім'я повинно містити мінімум 2 символи"),
+  gameTheme: yup.string().required()
+}).required();
 
-const StartMenu: React.FC = () => {
+type FormInputs = yup.InferType<typeof validationSchema>;
+
+const StartMenu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const board = useSelector((state: RootState) => state.game.board);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>({
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       whitePlayer: '',
       blackPlayer: '',
@@ -42,19 +50,19 @@ const StartMenu: React.FC = () => {
         <div className="form-group">
           <label>Гравець за Білих:</label>
           <input 
-            {...register('whitePlayer', { required: true, minLength: 2 })} 
+            {...register('whitePlayer')} 
             placeholder="Ім'я гравця"
           />
-          {errors.whitePlayer && <span className="error">Мінімум 2 символи</span>}
+          {errors.whitePlayer && <span className="error">{errors.whitePlayer.message}</span>}
         </div>
 
         <div className="form-group">
           <label>Гравець за Чорних:</label>
           <input 
-            {...register('blackPlayer', { required: true, minLength: 2 })} 
+            {...register('blackPlayer')} 
             placeholder="Ім'я гравця"
           />
-          {errors.blackPlayer && <span className="error">Мінімум 2 symbols</span>}
+          {errors.blackPlayer && <span className="error">{errors.blackPlayer.message}</span>}
         </div>
 
         <div className="form-group">
@@ -70,7 +78,7 @@ const StartMenu: React.FC = () => {
 
       {isGameStarted && (
         <button onClick={() => navigate('/game')} className="continue-btn">
-          Продовжити гру
+          Продовжити поточну гру
         </button>
       )}
     </div>
